@@ -4,10 +4,11 @@ This file is for the methods concerning everything naive bayes
 TODO:
 1. convert nominal values to numbers DONE!
 2. 2/3 of the data is training data, rest is test DONE from previous!
-3. k is specified at runtime
-4. majority vote between neighbors
-4. error rate? mean error over 100 samples?
-5. confusion matrix?
+3. k is specified at runtime ? DONE searching the nearest neighbors
+4. majority vote between neighbors DONE
+5. reverse trasform from number to class.
+6. error rate? mean error over 100 samples?
+7. confusion matrix?
 """
 import math
 from operator import itemgetter
