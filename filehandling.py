@@ -50,6 +50,11 @@ def read_data(filepath: str):
 
 
 def separation(instances):
+    """
+    function to separate data to 2 sets: training and test
+    :param instances: lest of instances
+    :return: two lists with data
+    """
     size_train = int((len(instances)) * 2 / 3)
     train_dataset = []
     test_set = list(instances)  # copy the full list
@@ -57,3 +62,20 @@ def separation(instances):
         index = random.randrange(len(test_set))  # find the random index to append in train data set
         train_dataset.append(test_set.pop(index))  # reduce the size of test set and increase and add the inctances in trainset
     return train_dataset, test_set
+
+def modify(instances:list):
+    """
+    the function to modify all string attributes to numbers
+    :param istances: the list of instances with the rough data
+    :return: the list of already modified data
+    """
+    dict_of_params = {"vhigh":3, "high":2, "med":1, "low":0, "2":0, "3":1, "4":2, "5more":3, "more":4, "small": 1, "big":3}
+    dict_of_classes = {"unacc":0, "acc":1, "good":2, "vgood":3}
+    final_list=[[0 for x in range(7)] for y in range(len(instances))]
+    for i in range(len(instances)):
+        for j in range(6):
+            final_list[i][j]=dict_of_params.get(instances[i][j])
+        final_list[i][6]=dict_of_classes.get(instances[i][6])
+    return final_list
+
+

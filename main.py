@@ -39,3 +39,6 @@ for x in confusion_matrix:
     print(x)
 
 """
+print(instances[0][6])
+new = fiha.modify(instances)
+print(new)
