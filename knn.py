@@ -53,7 +53,25 @@ def euclidean_distance(input1: list, input2: list):
     """
     distance = 0
     for i in range(6):
-        distance += pow(input1[i] - input2[i], 2)
+        distance =+ pow(int(input1[i]) - int(input2[i]), 2)
     distance = math.sqrt(distance)
     return distance
-#def search_nearest(newinstances:list, inputvector: list, k:int):
+def search_nearest(trainingset:list, inputvector: list, k:int):
+    """
+    fucntion that searcehs for k nearest neighbors
+    :param trainingset: already separated and transformed train set
+    :param inputvector: input instance from test data
+    :param k: the number of searched neighbors
+    :return: k nearest neighbors
+    """
+    distances = []
+    for inst in trainingset:
+        euclidian = euclidean_distance(inst, inputvector)
+        distances.append((inst, euclidian))
+    distances = sorted(distances, key = lambda distance: distances[1])
+    near_neighbours = []
+    for i in range(k):
+        near_neighbours.append(distances[k][0])
+    return near_neighbours
+#def getting_class(list_of_neighbors:list):
+    #counter_of_votes ={}
