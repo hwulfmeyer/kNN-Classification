@@ -42,3 +42,8 @@ for x in confusion_matrix:
 print(instances[0][6])
 new = fiha.modify(instances)
 print(new)
+new1=("low","low","5more","2","big","low","acc")
+print(fiha.transforming(new1))
+distance = knn.euclidean_distance(new[0], new[110])
+print(distance)
+

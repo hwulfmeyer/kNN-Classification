@@ -2,14 +2,14 @@
 This file is for the methods concerning everything naive bayes
 
 TODO:
-1. convert nominal values to numbers
-2. 2/3 of the data is training data, rest is test
+1. convert nominal values to numbers DONE!
+2. 2/3 of the data is training data, rest is test DONE from previous!
 3. k is specified at runtime
 4. majority vote between neighbors
 4. error rate? mean error over 100 samples?
 5. confusion matrix?
 """
-
+import math
 
 def calculate_error(dataclasses: list):
     """
@@ -43,3 +43,17 @@ def get_confusion_matrix(classes: list, dataclasses: list):
             line.append(sum(x == inst[0] and y == inst[1] for inst in dataclasses))
         confmatrix.append(line)
     return confmatrix
+
+def euclidean_distance(input1: list, input2: list):
+    """
+    fucntion that calculates the euclidean distance for our task and for 6 dimensions only
+    :param input1: instance 1
+    :param input2: instance 2
+    :return: distance
+    """
+    distance = 0
+    for i in range(6):
+        distance += pow(input1[i] - input2[i], 2)
+    distance = math.sqrt(distance)
+    return distance
+#def search_nearest(newinstances:list, inputvector: list, k:int):

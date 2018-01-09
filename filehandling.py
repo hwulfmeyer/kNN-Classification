@@ -69,13 +69,22 @@ def modify(instances:list):
     :param istances: the list of instances with the rough data
     :return: the list of already modified data
     """
-    dict_of_params = {"vhigh":3, "high":2, "med":1, "low":0, "2":0, "3":1, "4":2, "5more":3, "more":4, "small": 1, "big":3}
-    dict_of_classes = {"unacc":0, "acc":1, "good":2, "vgood":3}
     final_list=[[0 for x in range(7)] for y in range(len(instances))]
     for i in range(len(instances)):
-        for j in range(6):
-            final_list[i][j]=dict_of_params.get(instances[i][j])
-        final_list[i][6]=dict_of_classes.get(instances[i][6])
+            final_list[i]=transforming(instances[i])
     return final_list
 
-
+def transforming(inputvector:list):
+    """
+    function that transforms single input vector for satisfying condition
+    :param inputvector: vectro to transform
+    :return: the vector with numbers
+    """
+    dict_of_params = {"vhigh": 3, "high": 2, "med": 1, "low": 0, "2": 0, "3": 1, "4": 2, "5more": 3, "more": 4,
+                      "small": 1, "big": 3}
+    dict_of_classes = {"unacc": 0, "acc": 1, "good": 2, "vgood": 3}
+    final_vector = [0 for i in range(7)]
+    for i in range(6):
+        final_vector[i] = dict_of_params.get(inputvector[i])
+        final_vector[6] = dict_of_classes.get(inputvector[6])
+    return final_vector
