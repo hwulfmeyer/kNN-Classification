@@ -10,6 +10,7 @@ TODO:
 5. confusion matrix?
 """
 import math
+from operator import itemgetter
 
 def calculate_error(dataclasses: list):
     """
@@ -73,5 +74,19 @@ def search_nearest(trainingset:list, inputvector: list, k:int):
     for i in range(k):
         near_neighbours.append(distances[k][0])
     return near_neighbours
-#def getting_class(list_of_neighbors:list):
-    #counter_of_votes ={}
+def getting_class(list_of_neighbors:list):
+    """
+    function that get a certain class from majority vote
+    :param list_of_neighbors: list of vectors(neighbors)
+    :return: choosen class
+    """
+    counter_of_votes ={}
+    for k in range(len(list_of_neighbors)):
+        vote= list_of_neighbors[k][-1]
+        if vote in counter_of_votes:
+            counter_of_votes[vote] += 1
+        else:
+            counter_of_votes[vote] = 1
+    listSort = sorted(counter_of_votes.items(), key = itemgetter(1), reverse=True)
+    return listSort[0][0]
+
