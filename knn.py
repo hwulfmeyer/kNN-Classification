@@ -48,22 +48,22 @@ def get_confusion_matrix(classes: list, dataclasses: list):
     return confmatrix
 
 
-def manhatten_distance(input1: list, input2: list):
+def sqreuclidean_distance(input1: list, input2: list):
     """
-    fucntion that calculates the manhatten distance for our task
+    function that calculates the squared euclidean distance for our task
     :param input1: instance 1
     :param input2: instance 2
     :return: distance
     """
     distance = 0
     for i in range(len(input1)-1):
-        distance += abs(input1[i] - input2[i])
+        distance += pow(input1[i] - input2[i], 2)
     return distance
 
 
 def search_nearest(trainingset: list, inputvector: list, k: int):
     """
-    fucntion that searches for k nearest neighbors
+    function that searches for k nearest neighbors
     :param trainingset: already separated and transformed train set
     :param inputvector: input instance from test data
     :param k: the number of searched neighbors
@@ -72,7 +72,7 @@ def search_nearest(trainingset: list, inputvector: list, k: int):
     distances = []
     near_neighbours = []
     for inst in trainingset:
-        distances.append([inst, manhatten_distance(inst, inputvector)])
+        distances.append([inst, sqreuclidean_distance(inst, inputvector)])
     distances = sorted(distances, key=itemgetter(1))
     for i in range(k):
         near_neighbours.append(distances[k][0])
