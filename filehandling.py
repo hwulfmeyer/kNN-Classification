@@ -64,29 +64,30 @@ def separation(instances):
     return train_dataset, test_set
 
 
-def modify(instances: list):
+def modify(instances: list, attribute_values: list):
     """
     the function to modify all string attributes to numbers
     :param instances: the list of instances with the rough data
+    :param attribute_values: is a two-dimensional list where each row respresents
+        one attribute(in the order of 'attributes') and the possible values
     :return: the list of already modified data
     """
-    final_list=[[0 for x in range(7)] for y in range(len(instances))]
+    converted_list = []
     for i in range(len(instances)):
-            final_list[i] = transforming(instances[i])
-    return final_list
+            converted_list.append(transforming(instances[i], attribute_values))
+    return converted_list
 
 
-def transforming(inputvector: list):
+def transforming(inputvector: list, attribute_values: list):
     """
     function that transforms single input vector for satisfying condition
     :param inputvector: vectro to transform
+    :param attribute_values: is a two-dimensional list where each row respresents
+        one attribute(in the order of 'attributes') and the possible values
     :return: the vector with numbers
     """
-    dict_of_params = {"vhigh": 3, "high": 2, "med": 1, "low": 0, "2": 0, "3": 1, "4": 2, "5more": 3, "more": 4,
-                      "small": 1, "big": 3}
-    dict_of_classes = {"unacc": 0, "acc": 1, "good": 2, "vgood": 3}
-    final_vector = [0 for i in range(7)]
-    for i in range(6):
-        final_vector[i] = dict_of_params.get(inputvector[i])
-        final_vector[6] = dict_of_classes.get(inputvector[6])
-    return final_vector
+    converted_instance = []
+    for i in range(len(inputvector)-1):
+        converted_instance.append(attribute_values[i].index(inputvector[i]))
+    converted_instance.append(inputvector[-1])
+    return converted_instance

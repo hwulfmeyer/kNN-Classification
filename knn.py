@@ -48,17 +48,16 @@ def get_confusion_matrix(classes: list, dataclasses: list):
     return confmatrix
 
 
-def euclidean_distance(input1: list, input2: list):
+def manhatten_distance(input1: list, input2: list):
     """
-    fucntion that calculates the euclidean distance for our task and for 6 dimensions only
+    fucntion that calculates the manhatten distance for our task
     :param input1: instance 1
     :param input2: instance 2
     :return: distance
     """
     distance = 0
-    for i in range(len(input1)):
-        distance += pow(input1[i] - input2[i], 2)
-    distance = math.sqrt(distance)
+    for i in range(len(input1)-1):
+        distance += abs(input1[i] - input2[i])
     return distance
 
 
@@ -71,10 +70,10 @@ def search_nearest(trainingset: list, inputvector: list, k: int):
     :return: k nearest neighbors
     """
     distances = []
-    for inst in trainingset:
-        distances.append([inst, euclidean_distance(inst, inputvector)])
-    distances = sorted(distances, key=itemgetter(1))
     near_neighbours = []
+    for inst in trainingset:
+        distances.append([inst, manhatten_distance(inst, inputvector)])
+    distances = sorted(distances, key=itemgetter(1))
     for i in range(k):
         near_neighbours.append(distances[k][0])
     return near_neighbours
@@ -87,13 +86,28 @@ def getting_class(list_of_neighbors: list, classes: list):
     :param classes: is a one-dimensional list containing the class names
     :return: choosen class
     """
-    print(list_of_neighbors)
     votecounter = []
-    for k in range(len(classes)):
+    for k in classes:
         votecounter.append([k, 0])
     for k in range(len(list_of_neighbors)):
         target = list_of_neighbors[k][-1]
-        votecounter[target][1] += 1
+        votecounter[classes.index(target)][1] += 1
     votecountersorted = sorted(votecounter, key=itemgetter(1), reverse=True)
-    return classes[votecountersorted[0][0]]
+    return votecountersorted[0][0]
 
+
+def get_predictions(train_data: list, data: list, k: int, classes: list):
+    """
+    function to get the predicted classes of each instance in data
+
+    :param train_data: training set of the data
+    :param data: test set of the data
+    :param k: the paramaeter k in k-Nearest-Neighbors
+    :param classes: list of the classes in the data
+    :return:
+    """
+    dataclasses = []
+    for d in data:
+        nearestneighbors = search_nearest(train_data, d, k)
+        dataclasses.append([d[-1], getting_class(nearestneighbors, classes)])
+    return dataclasses
