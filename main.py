@@ -39,14 +39,8 @@ for x in confusion_matrix:
     print(x)
 
 """
-print(instances[0][6])
-new = fiha.modify(instances)
-print(new)
-new1=("low","low","5more","2","big","low","acc")
-print(fiha.transforming(new1))
-distance = knn.euclidean_distance(new[0], new[110])
-print(distance)
-train_data, test_data = fiha.separation(new)
-print(train_data)
+
+numeraldata = fiha.modify(instances)
+train_data, test_data = fiha.separation(numeraldata)
 checklist = knn.search_nearest(train_data, test_data[0], 5)
-print(knn.getting_class(checklist))
+print(knn.getting_class(checklist, classes))

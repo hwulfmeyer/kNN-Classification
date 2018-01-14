@@ -63,18 +63,20 @@ def separation(instances):
         train_dataset.append(test_set.pop(index))  # reduce the size of test set and increase and add the inctances in trainset
     return train_dataset, test_set
 
-def modify(instances:list):
+
+def modify(instances: list):
     """
     the function to modify all string attributes to numbers
-    :param istances: the list of instances with the rough data
+    :param instances: the list of instances with the rough data
     :return: the list of already modified data
     """
     final_list=[[0 for x in range(7)] for y in range(len(instances))]
     for i in range(len(instances)):
-            final_list[i]=transforming(instances[i])
+            final_list[i] = transforming(instances[i])
     return final_list
 
-def transforming(inputvector:list):
+
+def transforming(inputvector: list):
     """
     function that transforms single input vector for satisfying condition
     :param inputvector: vectro to transform

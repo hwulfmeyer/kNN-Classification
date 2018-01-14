@@ -13,6 +13,7 @@ TODO:
 import math
 from operator import itemgetter
 
+
 def calculate_error(dataclasses: list):
     """
     calculates the error rate, = misclassified_data / total data
@@ -46,6 +47,7 @@ def get_confusion_matrix(classes: list, dataclasses: list):
         confmatrix.append(line)
     return confmatrix
 
+
 def euclidean_distance(input1: list, input2: list):
     """
     fucntion that calculates the euclidean distance for our task and for 6 dimensions only
@@ -54,13 +56,15 @@ def euclidean_distance(input1: list, input2: list):
     :return: distance
     """
     distance = 0
-    for i in range(6):
-        distance =+ pow(int(input1[i]) - int(input2[i]), 2)
+    for i in range(len(input1)):
+        distance += pow(input1[i] - input2[i], 2)
     distance = math.sqrt(distance)
     return distance
-def search_nearest(trainingset:list, inputvector: list, k:int):
+
+
+def search_nearest(trainingset: list, inputvector: list, k: int):
     """
-    fucntion that searcehs for k nearest neighbors
+    fucntion that searches for k nearest neighbors
     :param trainingset: already separated and transformed train set
     :param inputvector: input instance from test data
     :param k: the number of searched neighbors
@@ -68,26 +72,28 @@ def search_nearest(trainingset:list, inputvector: list, k:int):
     """
     distances = []
     for inst in trainingset:
-        euclidian = euclidean_distance(inst, inputvector)
-        distances.append((inst, euclidian))
-    distances = sorted(distances, key = lambda distance: distances[1])
+        distances.append([inst, euclidean_distance(inst, inputvector)])
+    distances = sorted(distances, key=itemgetter(1))
     near_neighbours = []
     for i in range(k):
         near_neighbours.append(distances[k][0])
     return near_neighbours
-def getting_class(list_of_neighbors:list):
+
+
+def getting_class(list_of_neighbors: list, classes: list):
     """
     function that get a certain class from majority vote
     :param list_of_neighbors: list of vectors(neighbors)
+    :param classes: is a one-dimensional list containing the class names
     :return: choosen class
     """
-    counter_of_votes ={}
+    print(list_of_neighbors)
+    votecounter = []
+    for k in range(len(classes)):
+        votecounter.append([k, 0])
     for k in range(len(list_of_neighbors)):
-        vote= list_of_neighbors[k][-1]
-        if vote in counter_of_votes:
-            counter_of_votes[vote] += 1
-        else:
-            counter_of_votes[vote] = 1
-    listSort = sorted(counter_of_votes.items(), key = itemgetter(1), reverse=True)
-    return listSort[0][0]
+        target = list_of_neighbors[k][-1]
+        votecounter[target][1] += 1
+    votecountersorted = sorted(votecounter, key=itemgetter(1), reverse=True)
+    return classes[votecountersorted[0][0]]
 
